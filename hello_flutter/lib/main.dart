@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_flutter/widgets/button.dart';
 
 void main() {
   runApp(App());
@@ -15,17 +16,18 @@ class App extends StatelessWidget {
       home: Scaffold(
         backgroundColor: const Color(0xff181818),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 70),
+              const SizedBox(height: 70),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
+                      const Text(
                         'Hey, Selena',
                         style: TextStyle(
                             color: Colors.white,
@@ -38,6 +40,45 @@ class App extends StatelessWidget {
                             color: Colors.white.withOpacity(0.8), fontSize: 18),
                       ),
                     ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 80,
+              ),
+              Text(
+                'Total Balance',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white.withOpacity(0.8),
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              const Text(
+                '\$5 194 482',
+                style: TextStyle(
+                  fontSize: 44,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const MyButton(
+                    text: 'Transfer',
+                    backgroundColor: Colors.amber,
+                    textColor: Colors.black,
+                  ),
+                  MyButton(
+                    text: 'Request',
+                    backgroundColor: Colors.white.withOpacity(0.1),
+                    textColor: Colors.white,
                   ),
                 ],
               ),
