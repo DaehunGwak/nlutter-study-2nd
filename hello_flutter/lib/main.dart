@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hello_flutter/widgets/button.dart';
+import 'package:hello_flutter/widgets/card.dart';
 
 void main() {
   runApp(App());
@@ -15,7 +16,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color(0xff161616),
-        body: Padding(
+        body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +45,7 @@ class App extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 80,
+                height: 60,
               ),
               Text(
                 'Total Balance',
@@ -109,56 +110,34 @@ class App extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xff1c1d1f),
-                  borderRadius: BorderRadius.circular(20),
+              const MyWalletCard(
+                currencyTitle: 'Euro',
+                balanceText: '6 428',
+                currencyCodeText: 'EUR',
+                backgroundColor: Color(0xff1c1d1f),
+                fontColor: Colors.white,
+                rightIcon: Icons.euro,
+              ),
+              Transform.translate(
+                offset: const Offset(0, -20),
+                child: const MyWalletCard(
+                  currencyTitle: 'Dollar',
+                  balanceText: '55 622',
+                  currencyCodeText: 'USD',
+                  backgroundColor: Colors.white,
+                  fontColor: Color(0xff1c1d1f),
+                  rightIcon: Icons.monetization_on_outlined,
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 25,
-                ),
-                child: const Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Euro',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 34,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              '6 428',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 28,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              'EUR',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
+              ),
+              Transform.translate(
+                offset: const Offset(0, -40),
+                child: const MyWalletCard(
+                  currencyTitle: 'Bitcoin',
+                  balanceText: '312.65',
+                  currencyCodeText: 'BTC',
+                  backgroundColor: Color(0xff1c1d1f),
+                  fontColor: Colors.white,
+                  rightIcon: Icons.currency_bitcoin,
                 ),
               ),
             ],
