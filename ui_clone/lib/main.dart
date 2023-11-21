@@ -26,8 +26,11 @@ class ScheduleCloneApp extends StatelessWidget {
 
         ),
         textTheme: const TextTheme(
+          bodyLarge: TextStyle(fontSize: 26),
           bodyMedium: TextStyle(fontSize: 16),
+          bodySmall: TextStyle(fontSize: 14),
           titleMedium: TextStyle(fontSize: 44),
+          titleLarge: TextStyle(fontSize: 66),
         )
       ),
       home: const Scaffold(
