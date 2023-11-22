@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,6 +10,50 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  static const int _INITIAL_TOTAL_SECONDS = 3; // 25:00
+
+  int _totalSeconds = _INITIAL_TOTAL_SECONDS;
+  int _totalPomodoro = 0;
+  bool _isRunning = false;
+  late Timer _timer; // late: 나중에 반드시 초기화 될거야
+
+  void _onTick(Timer timer) {
+    if (_totalSeconds != 0) {
+      setState(() => _totalSeconds--);
+      return;
+    }
+    setState(() {
+      _totalPomodoro++;
+      _totalSeconds = _INITIAL_TOTAL_SECONDS;
+      _isRunning = false;
+      _timer.cancel();
+    });
+  }
+
+  void _onStartPressed() {
+    _timer = Timer.periodic(
+      const Duration(seconds: 1),
+      _onTick,
+    );
+    setState(() {
+      _isRunning = true;
+    });
+  }
+
+  void _onPausePressed() {
+    _timer.cancel();
+    setState(() {
+      _isRunning = false;
+    });
+  }
+
+  String _formatTotalSeconds() {
+    final duration = Duration(seconds: _totalSeconds);
+    final minutes = duration.inMinutes.toString().padLeft(2, '0');
+    final seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+    return "$minutes:$seconds";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               alignment: Alignment.bottomCenter,
               child: Text(
-                "25:00",
+                _formatTotalSeconds(),
                 style: TextStyle(
                   color: Theme.of(context).cardColor,
                   fontSize: 89,
@@ -34,10 +80,12 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               alignment: Alignment.center,
               child: IconButton(
-                icon: const Icon(Icons.play_circle_outline),
+                icon: Icon(_isRunning
+                    ? Icons.pause_circle_outline
+                    : Icons.play_circle_outline),
                 iconSize: 98,
                 color: Theme.of(context).cardColor,
-                onPressed: () {},
+                onPressed: _isRunning ? _onPausePressed : _onStartPressed,
               ),
             ),
           ),
@@ -68,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   .color),
                         ),
                         Text(
-                          "0",
+                          "$_totalPomodoro",
                           style: TextStyle(
                               fontSize: 60,
                               fontWeight: FontWeight.w600,
