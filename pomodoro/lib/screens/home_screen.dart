@@ -93,12 +93,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
+                    onPressed: _isRunning ? _onPausePressed : _onStartPressed,
                     icon: Icon(_isRunning
                         ? Icons.pause_circle_outline
                         : Icons.play_circle_outline),
                     iconSize: 98,
                     color: Theme.of(context).cardColor,
-                    onPressed: _isRunning ? _onPausePressed : _onStartPressed,
                   ),
                   TextButton(
                     onPressed: _onResetPressed,
@@ -106,6 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       'Reset',
                       style: TextStyle(
                         color: Theme.of(context).cardColor,
+                        fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
