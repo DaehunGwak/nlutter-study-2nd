@@ -10,9 +10,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static const int _INITIAL_TOTAL_SECONDS = 3; // 25:00
+  static const int _initialTotalSeconds = 1500; // 25:00
 
-  int _totalSeconds = _INITIAL_TOTAL_SECONDS;
+  int _totalSeconds = _initialTotalSeconds;
   int _totalPomodoro = 0;
   bool _isRunning = false;
   late Timer _timer; // late: 나중에 반드시 초기화 될거야
@@ -24,10 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     setState(() {
       _totalPomodoro++;
-      _totalSeconds = _INITIAL_TOTAL_SECONDS;
+      _totalSeconds = _initialTotalSeconds;
       _isRunning = false;
-      _timer.cancel();
     });
+    _timer.cancel();
   }
 
   void _onStartPressed() {
@@ -43,6 +43,16 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onPausePressed() {
     _timer.cancel();
     setState(() {
+      _isRunning = false;
+    });
+  }
+
+  void _onResetPressed() {
+    if (_isRunning) {
+      _timer.cancel();
+    }
+    setState(() {
+      _totalSeconds = _initialTotalSeconds;
       _isRunning = false;
     });
   }
@@ -79,13 +89,28 @@ class _HomeScreenState extends State<HomeScreen> {
             flex: 3,
             child: Container(
               alignment: Alignment.center,
-              child: IconButton(
-                icon: Icon(_isRunning
-                    ? Icons.pause_circle_outline
-                    : Icons.play_circle_outline),
-                iconSize: 98,
-                color: Theme.of(context).cardColor,
-                onPressed: _isRunning ? _onPausePressed : _onStartPressed,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: Icon(_isRunning
+                        ? Icons.pause_circle_outline
+                        : Icons.play_circle_outline),
+                    iconSize: 98,
+                    color: Theme.of(context).cardColor,
+                    onPressed: _isRunning ? _onPausePressed : _onStartPressed,
+                  ),
+                  TextButton(
+                    onPressed: _onResetPressed,
+                    child: Text(
+                      'Reset',
+                      style: TextStyle(
+                        color: Theme.of(context).cardColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),
