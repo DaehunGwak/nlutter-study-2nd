@@ -16,16 +16,16 @@ class PomodoroApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.orange,
-          brightness: Brightness.light,
-          background: const Color(0xFFE7626C), // backgroundColor deprecated 대체
+          brightness: Brightness.dark,
+          background: const Color(0xFF232323), // backgroundColor deprecated 대체
         ),
         textTheme: const TextTheme(
           displayLarge: TextStyle(
             // headline1 deprecated 대체
-            color: Color(0xFF232B55),
+            color: Color(0xFF232323),
           ),
         ),
-        cardColor: const Color(0xFFF4EDDB),
+        cardColor: Colors.orangeAccent,
       ),
       home: const HomeScreen(),
     );
