@@ -15,8 +15,16 @@ class PomodoroTimer {
 
   int get nowSeconds => _nowSeconds;
 
+  bool get isFocus => _isFocus;
+
+  bool get isPlay => _isPlay;
+
   void play() {
     _isPlay = true;
+  }
+
+  void pause() {
+    _isPlay = false;
   }
 
   void count() {
@@ -25,7 +33,9 @@ class PomodoroTimer {
     }
   }
 
-  bool isFinished() => _isPlay && (_nowSeconds <= 0);
+  bool isFinished() => _isPlay && _isFocus && (_nowSeconds <= 0);
+
+  bool isBreakFinished() => _isPlay && !_isFocus && (_nowSeconds <= 0);
 
   void onBreakMode() {
     _nowSeconds = _breakSeconds;
@@ -34,7 +44,7 @@ class PomodoroTimer {
   }
 
   void reset(PomodoroMinuteType minuteType) {
-    _nowSeconds = PomodoroMinuteType.thirtyFive.seconds;
+    _nowSeconds = minuteType.seconds;
     _isFocus = true;
     _isPlay = false;
   }
