@@ -4,6 +4,7 @@ class PomodoroTimer {
   static const int _breakSeconds = _secondsPerMinute * 5;
 
   int _nowSeconds = PomodoroMinuteType.twentyFive.seconds;
+  bool _isFocus = true;
   bool _isPlay = false;
 
   String get nowFormatSeconds =>
@@ -28,11 +29,13 @@ class PomodoroTimer {
 
   void onBreakMode() {
     _nowSeconds = _breakSeconds;
+    _isFocus = false;
     _isPlay = true;
   }
 
   void reset(PomodoroMinuteType minuteType) {
     _nowSeconds = PomodoroMinuteType.thirtyFive.seconds;
+    _isFocus = true;
     _isPlay = false;
   }
 

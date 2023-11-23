@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pomodoro_reloaded/models/pomodoro_round.dart';
 
-/// ``
 void main() {
   test('라운드 8번 증가하면 골은 2번이다', () {
     // given
