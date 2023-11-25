@@ -6,7 +6,7 @@ class WebtoonTodayModel {
   WebtoonTodayModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         title = json['title'],
-        thumb = json['id'];
+        thumb = json['thumb'];
 
   @override
   String toString() {

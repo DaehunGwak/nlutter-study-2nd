@@ -6,10 +6,9 @@ import 'package:webtoon/models/webtoon.dart';
 class ApiService {
   static const String _baseUrl =
       "https://webtoon-crawler.nomadcoders.workers.dev";
-
   static const String _todayPath = "today";
 
-  Future<List<WebtoonTodayModel>> getTodayToons() async {
+  static Future<List<WebtoonTodayModel>> getTodayToons() async {
     final url = Uri.parse('$_baseUrl/$_todayPath');
     final response = await http.get(url);
 
