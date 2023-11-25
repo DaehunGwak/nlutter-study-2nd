@@ -3,6 +3,7 @@ import 'package:webtoon/services/api_service.dart';
 
 import '../constants/headers.dart' as headers;
 import '../models/webtoon.dart';
+import '../widgets/episode_widget.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({
@@ -116,36 +117,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   child: Column(
                     children: [
                       for (var episode in snapshot.data!)
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.green.shade300,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          margin: const EdgeInsets.only(bottom: 10),
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  episode.title,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.chevron_right,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        EpisodeWidget(titleId: widget.id, episode: episode),
                       const SizedBox(height: 40),
                     ],
                   ),
