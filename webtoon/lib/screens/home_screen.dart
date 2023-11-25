@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:webtoon/widgets/webtoon_widget.dart';
 
 import '../models/webtoon.dart';
 import '../services/api_service.dart';
-
-const _userAgent =
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36";
-const _headerMap = {"User-Agent": _userAgent};
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -38,11 +35,11 @@ class HomeScreen extends StatelessWidget {
           }
           return Column(
             children: [
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
               Expanded(
                 child: _buildListView(snapshot),
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
             ],
           );
         },
@@ -53,35 +50,14 @@ class HomeScreen extends StatelessWidget {
   Widget _buildListView(AsyncSnapshot<List<WebtoonTodayModel>> snapshot) {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       itemCount: snapshot.data!.length,
       itemBuilder: (context, index) {
         final webtoon = snapshot.data![index];
-        return Column(
-          children: [
-            Container(
-              width: 150,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 7,
-                    offset: Offset(5, 5),
-                    color: Colors.black54,
-                  ),
-                ],
-              ),
-              child: Image.network(webtoon.thumb, headers: _headerMap),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                webtoon.title,
-                style: const TextStyle(fontSize: 16),
-              ),
-            ),
-          ],
+        return WebtoonCard(
+          id: webtoon.id,
+          title: webtoon.title,
+          thumb: webtoon.thumb,
         );
       },
       separatorBuilder: (context, index) => const SizedBox(width: 20),
