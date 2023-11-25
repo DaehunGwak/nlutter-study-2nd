@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webtoon/services/api_service.dart';
 
 import '../constants/headers.dart' as headers;
@@ -22,34 +23,37 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+
   // stateful widget 으로 바꾼 이유
   // future api method 에 paramter 가 추가되어서...
   late Future<WebtoonDetailModel> detailFuture;
-  late Future<List<WebtoonEpisodeModel>> episodesFutre;
+  late Future<List<WebtoonEpisodeModel>> episodeFuture;
 
   @override
   void initState() {
     super.initState();
     detailFuture = ApiService.getToonById(widget.id);
-    episodesFutre = ApiService.getLatestEpisodesById(widget.id);
+    episodeFuture = ApiService.getLatestEpisodesById(widget.id);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: const TextStyle(
-            color: Colors.green,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+          title: Text(
+            widget.title,
+            style: const TextStyle(
+              color: Colors.green,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.green,
-      ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.green,
+          actions: [
+            WebtoonFavoriteButton(toonId: widget.id)
+          ]),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -105,7 +109,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             const SizedBox(height: 25),
             FutureBuilder(
-              future: episodesFutre,
+              future: episodeFuture,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
@@ -127,6 +131,75 @@ class _DetailScreenState extends State<DetailScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class WebtoonFavoriteButton extends StatefulWidget {
+  WebtoonFavoriteButton({
+    super.key,
+    required this.toonId,
+  });
+
+  final String toonId;
+
+  @override
+  State<WebtoonFavoriteButton> createState() => _WebtoonFavoriteButtonState();
+}
+
+class _WebtoonFavoriteButtonState extends State<WebtoonFavoriteButton> {
+  static const String _likedToonsKey = 'likedToons';
+
+  late SharedPreferences pref; // for local file
+  bool isLiked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    initPrefs();
+  }
+
+  Future initPrefs() async {
+    pref = await SharedPreferences.getInstance();
+
+    final likedToons = pref.getStringList(_likedToonsKey);
+    print(likedToons);
+
+    if (likedToons == null) {
+      await pref.setStringList(_likedToonsKey, []);
+      return;
+    }
+
+    setState(() {
+      isLiked = likedToons.contains(widget.toonId);
+    });
+  }
+
+  void onFavoriteButtonTap() async {
+    final likedToonIds = pref.getStringList(_likedToonsKey)!;
+    print(likedToonIds);
+
+    if (likedToonIds.contains(widget.toonId)) {
+      likedToonIds.remove(widget.toonId);
+      await pref.setStringList(_likedToonsKey, likedToonIds);
+      setState(() {
+        isLiked = false;
+      });
+      return;
+    }
+
+    likedToonIds.add(widget.toonId);
+    await pref.setStringList(_likedToonsKey, likedToonIds);
+    setState(() {
+      isLiked = true;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: onFavoriteButtonTap,
+      icon: Icon(isLiked ? Icons.favorite : Icons.favorite_outline),
     );
   }
 }
