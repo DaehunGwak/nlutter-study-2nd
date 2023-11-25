@@ -9,4 +9,20 @@ void main() {
 
     expect(response.length > 1, true);
   });
+
+  test('detail 웹툰 api 작동 테스트', () async {
+    final response = await ApiService.getToonById('787061');
+
+    print(response);
+
+    expect(response.title, '소공녀 민트');
+  });
+
+  test('특정 웹툰 episodes api 작동 테스트', () async {
+    final response = await ApiService.getLatestEpisodesById('787061');
+
+    print(response);
+
+    expect(response.length >= 5, true);
+  });
 }

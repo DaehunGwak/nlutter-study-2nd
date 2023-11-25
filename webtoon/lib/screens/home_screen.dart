@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
           // snapshot: 주입한 future 정보들
           if (!snapshot.hasData) {
             return const Center(
-              child: CircularProgressIndicator(strokeWidth: 4),
+              child: CircularProgressIndicator(color: Colors.green),
             );
           }
           return Column(
