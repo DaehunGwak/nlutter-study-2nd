@@ -34,20 +34,23 @@ class DetailScreen extends StatelessWidget {
         children: [
           const SizedBox(height: 30),
           Center(
-            child: Container(
-              width: 250,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 7,
-                    offset: Offset(5, 5),
-                    color: Colors.black54,
-                  ),
-                ],
+            child: Hero(
+              tag: id,
+              child: Container(
+                width: 250,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 7,
+                      offset: Offset(5, 5),
+                      color: Colors.black54,
+                    ),
+                  ],
+                ),
+                child: Image.network(thumb, headers: headers.headerMap),
               ),
-              child: Image.network(thumb, headers: headers.headerMap),
             ),
           )
         ],
