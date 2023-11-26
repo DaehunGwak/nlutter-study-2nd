@@ -12,6 +12,8 @@ class SimpleMovie {
         backdropImageUrl = ImageUrlUtils.getFullImageUrl(json['backdrop_path']),
         posterImageUrl = ImageUrlUtils.getFullImageUrl(json['poster_path']);
 
+  String? get imageUrl => backdropImageUrl ?? posterImageUrl;
+
   @override
   String toString() {
     return 'PopularMovie{id: $id, title: $title, backdropImageUrl: $backdropImageUrl, posterImageUrl: $posterImageUrl}';
@@ -39,6 +41,8 @@ class DetailMovie {
         voteAverage = json['vote_average'],
         backdropImageUrl = ImageUrlUtils.getFullImageUrl(json['backdrop_path']),
         posterImageUrl = ImageUrlUtils.getFullImageUrl(json['poster_path']);
+
+  String? get imageUrl => backdropImageUrl ?? posterImageUrl;
 
   @override
   String toString() {

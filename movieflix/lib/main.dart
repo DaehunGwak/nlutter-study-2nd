@@ -14,7 +14,27 @@ class MovieflixApp extends StatelessWidget {
     return MaterialApp(
       title: 'Movieflix',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          brightness: Brightness.light,
+          seedColor: Colors.white,
+          background: Colors.white,
+          primary: Colors.black,
+          tertiary: Colors.white,
+        ),
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+          titleSmall: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          bodyMedium: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         useMaterial3: true,
       ),
       home: const HomeScreen(),
