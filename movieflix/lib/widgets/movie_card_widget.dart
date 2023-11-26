@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movieflix/models/movie_meta.dart';
+import 'package:movieflix/screens/detail_screen.dart';
 import 'package:movieflix/utils/tag_builder.dart';
 
 class MovieCardWidget extends StatelessWidget {
@@ -47,6 +48,7 @@ class MovieCardWidget extends StatelessWidget {
                 imageHeight: imageHeight,
                 isDisplayTitle: isDisplayTitle,
                 movies: snapshot.data!,
+                middleTag: title,
               );
             },
           ),
@@ -62,12 +64,14 @@ class _CardListWidget extends StatelessWidget {
     required this.imageHeight,
     required this.isDisplayTitle,
     required this.movies,
+    required this.middleTag,
   });
 
   final double imageWidth;
   final double imageHeight;
   final bool isDisplayTitle;
   final List<SimpleMovie> movies;
+  final String middleTag;
 
   @override
   Widget build(BuildContext context) {
@@ -76,40 +80,57 @@ class _CardListWidget extends StatelessWidget {
       itemCount: movies.length,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       itemBuilder: (context, index) {
-        return Container(
-          width: imageWidth,
-          decoration: const BoxDecoration(color: Colors.transparent),
-          clipBehavior: Clip.hardEdge,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: imageWidth,
-                height: imageHeight,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Hero(
-                  tag: TagBuilder.buildImageTag(movies[index].id),
-                  child: Image.network(
-                    movies[index].imageUrl!,
-                    height: imageHeight,
-                    fit: BoxFit.fitHeight,
-                  ),
+        // cache image
+        precacheImage(Image.network(movies[index].imageBigUrl!).image, context);
+
+        // widget
+        return GestureDetector(
+          onTap: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailScreen(
+                  id: movies[index].id,
+                  title: movies[index].title,
+                  imageUrl: movies[index].imageBigUrl!,
+                  middleTag: middleTag,
                 ),
               ),
-              const SizedBox(height: 10),
-              if (isDisplayTitle)
+            )
+          },
+          child: Container(
+            width: imageWidth,
+            decoration: const BoxDecoration(color: Colors.transparent),
+            clipBehavior: Clip.hardEdge,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Hero(
-                  tag: TagBuilder.buildTitleTag(movies[index].id),
-                  child: Text(
+                  tag: TagBuilder.buildImageTag(middleTag, movies[index].id),
+                  child: Container(
+                    width: imageWidth,
+                    height: imageHeight,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      color:
+                          Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Image.network(
+                      movies[index].imageUrl!,
+                      height: imageHeight,
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                if (isDisplayTitle)
+                  Text(
                     movies[index].title,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         );
       },

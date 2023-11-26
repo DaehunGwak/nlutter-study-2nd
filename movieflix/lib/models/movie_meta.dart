@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import '../utils/image_url.dart';
 
 class SimpleMovie {
@@ -9,10 +11,16 @@ class SimpleMovie {
   SimpleMovie.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         title = json['title'],
-        backdropImageUrl = ImageUrlUtils.getFullImageUrl(json['backdrop_path']),
-        posterImageUrl = ImageUrlUtils.getFullImageUrl(json['poster_path']);
+        backdropImageUrl = json['backdrop_path'],
+        posterImageUrl = json['poster_path'];
 
-  String? get imageUrl => backdropImageUrl ?? posterImageUrl;
+  String? get imageUrl {
+    return ImageUrlUtils.getImageUrl(backdropImageUrl ?? posterImageUrl);
+  }
+
+  String? get imageBigUrl {
+    return ImageUrlUtils.getBigImageUrl(backdropImageUrl ?? posterImageUrl);
+  }
 
   @override
   String toString() {
@@ -39,10 +47,14 @@ class DetailMovie {
             .map((e) => e['name'].toString())
             .toList(),
         voteAverage = json['vote_average'],
-        backdropImageUrl = ImageUrlUtils.getFullImageUrl(json['backdrop_path']),
-        posterImageUrl = ImageUrlUtils.getFullImageUrl(json['poster_path']);
+        backdropImageUrl = ImageUrlUtils.getImageUrl(json['backdrop_path']),
+        posterImageUrl = ImageUrlUtils.getImageUrl(json['poster_path']);
 
   String? get imageUrl => backdropImageUrl ?? posterImageUrl;
+
+  String get formattedRuntime => '${runtime ~/ 60}h ${runtime % 60}m';
+
+  String get formattedGenres => genres.getRange(0, min(3, genres.length)).join(', ');
 
   @override
   String toString() {

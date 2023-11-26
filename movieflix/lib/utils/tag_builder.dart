@@ -1,10 +1,7 @@
 class TagBuilder {
-  static const String _prefixImage = 'image-';
-  static const String _prefixTitle = 'title-';
+  static const String _prefixImage = 'image';
 
   TagBuilder._();
 
-  static String buildImageTag(int id) => '$_prefixImage$id';
-
-  static String buildTitleTag(int id) => '$_prefixTitle$id';
+  static String buildImageTag(String middle, int id) => '$_prefixImage-$middle-$id';
 }
