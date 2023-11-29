@@ -3,15 +3,24 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/log_in_screen.dart';
+import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
-  void _onLoginTap(BuildContext context) {
+  _onLoginTap(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => LogInScreen(),
+        builder: (context) => const LogInScreen(),
+      ),
+    );
+  }
+
+  _onEmailTap(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const UsernameScreen(),
       ),
     );
   }
@@ -19,15 +28,15 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body: SafeArea(
         // os 에서 기본적으로 상위 가려지는 구간 레이어를 비켜 내려갈 수 있음
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Sizes.size40),
+          padding: const EdgeInsets.symmetric(horizontal: Sizes.size40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Gaps.v80,
-              Text(
+              const Text(
                 'Sign up for TikTok',
                 style: TextStyle(
                   fontSize: Sizes.size24,
@@ -35,7 +44,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v20,
-              Text(
+              const Text(
                 'Create a profile, follow other accounts, make your own vidoes, and more.',
                 style: TextStyle(
                   fontSize: Sizes.size16,
@@ -44,22 +53,26 @@ class SignUpScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Gaps.v40,
-              AuthButton(
-                text: 'Use email & password',
-                icon: FaIcon(FontAwesomeIcons.user),
+              GestureDetector(
+                // TODO: 해당 제스쳐 디텍터를 AuthButton 에 내재화 시키기
+                onTap: () => _onEmailTap(context),
+                child: const AuthButton(
+                  text: 'Use email & password',
+                  icon: FaIcon(FontAwesomeIcons.user),
+                ),
               ),
               Gaps.v12,
-              AuthButton(
+              const AuthButton(
                 text: 'Continue with Facebook',
                 icon: FaIcon(FontAwesomeIcons.facebook),
               ),
               Gaps.v12,
-              AuthButton(
+              const AuthButton(
                 text: 'Continues with Apple',
                 icon: FaIcon(FontAwesomeIcons.apple),
               ),
               Gaps.v12,
-              AuthButton(
+              const AuthButton(
                 text: 'Continue with Google',
                 icon: FaIcon(FontAwesomeIcons.google),
               ),
@@ -73,7 +86,7 @@ class SignUpScreen extends StatelessWidget {
         shadowColor: Colors.black,
         elevation: 4,
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: Sizes.size32),
+          padding: const EdgeInsets.symmetric(vertical: Sizes.size32),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
