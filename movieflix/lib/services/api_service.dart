@@ -20,7 +20,7 @@ class ApiService {
     final response = await http.get(uri);
     _handleErrorStatusCode(response);
     _printDebug(response.body);
-    final List<dynamic> results = jsonDecode(response.body)[_resultsField];
+    final List<dynamic> results = _utf8JsonDecode(response.bodyBytes)[_resultsField];
     return results.map((e) => SimpleMovie.fromJson(e)).toList();
   }
 
@@ -29,7 +29,7 @@ class ApiService {
     final response = await http.get(uri);
     _handleErrorStatusCode(response);
     _printDebug(response.body);
-    final List<dynamic> results = jsonDecode(response.body)[_resultsField];
+    final List<dynamic> results = _utf8JsonDecode(response.bodyBytes)[_resultsField];
     return results.map((e) => SimpleMovie.fromJson(e)).toList();
   }
 
@@ -38,7 +38,7 @@ class ApiService {
     final response = await http.get(uri);
     _handleErrorStatusCode(response);
     _printDebug(response.body);
-    final List<dynamic> results = jsonDecode(response.body)[_resultsField];
+    final List<dynamic> results = _utf8JsonDecode(response.bodyBytes)[_resultsField];
     return results.map((e) => SimpleMovie.fromJson(e)).toList();
   }
 
@@ -47,7 +47,7 @@ class ApiService {
     final response = await http.get(uri);
     _handleErrorStatusCode(response);
     _printDebug(response.body);
-    return DetailMovie.fromJson(jsonDecode(response.body));
+    return DetailMovie.fromJson(_utf8JsonDecode(response.bodyBytes));
   }
 
   static void _handleErrorStatusCode(http.Response response) {
@@ -61,5 +61,9 @@ class ApiService {
     if (kDebugMode) {
       print(something);
     }
+  }
+
+  static dynamic _utf8JsonDecode(Uint8List unit) {
+    return jsonDecode(utf8.decode(unit));
   }
 }
