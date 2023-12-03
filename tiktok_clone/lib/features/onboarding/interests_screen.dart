@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
 import 'package:tiktok_clone/features/onboarding/widgets/interest_button.dart';
 
 final interests = [
@@ -50,6 +51,15 @@ class _InterestsScreenState extends State<InterestsScreen> {
     setState(() {
       _showTitle = false;
     });
+  }
+
+  void _onNextPressed() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TutorialScreen(),
+      ),
+    );
   }
 
   @override
@@ -150,17 +160,18 @@ class _InterestsScreenState extends State<InterestsScreen> {
               ),
               Gaps.h10,
               Expanded(
-                  child: CupertinoButton(
-                onPressed: () {},
-                color: Theme.of(context).colorScheme.primary,
-                child: const Text(
-                  'Next',
-                  style: TextStyle(
-                    fontSize: Sizes.size14,
-                    fontWeight: FontWeight.w500,
+                child: CupertinoButton(
+                  onPressed: _onNextPressed,
+                  color: Theme.of(context).colorScheme.primary,
+                  child: const Text(
+                    'Next',
+                    style: TextStyle(
+                      fontSize: Sizes.size14,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
-              )),
+              ),
               Gaps.h20,
             ],
           ),
@@ -169,4 +180,3 @@ class _InterestsScreenState extends State<InterestsScreen> {
     );
   }
 }
-
