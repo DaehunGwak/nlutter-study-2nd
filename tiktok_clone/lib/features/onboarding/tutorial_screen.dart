@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/main/navigation/main_navigation_screen.dart';
 import 'package:tiktok_clone/features/onboarding/widgets/tutorial_view.dart';
 
 enum Direction { left, right }
@@ -45,6 +46,14 @@ class _TutorialScreenState extends State<TutorialScreen> {
     }
   }
 
+  void _onEnterAppTap() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const MainNavigationScreen()),
+      (route) => false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -64,8 +73,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
             ),
             secondChild: const TutorialView(
               title: 'Follow the rules!',
-              description:
-                  'Take care one of another! please~',
+              description: 'Take care one of another! please~',
             ),
           ),
         ),
@@ -80,7 +88,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
               duration: const Duration(milliseconds: 300),
               opacity: _page == Page.first ? 0 : 1,
               child: CupertinoButton(
-                onPressed: () {},
+                onPressed: _onEnterAppTap,
                 color: Theme.of(context).colorScheme.primary,
                 child: const Text('Enter the app!'),
               ),

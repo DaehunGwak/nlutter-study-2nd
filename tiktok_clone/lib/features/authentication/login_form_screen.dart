@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
 class LoginFormScreen extends StatefulWidget {
   const LoginFormScreen({super.key});
@@ -75,5 +76,18 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
     }
     print(_formData);
     _formKey.currentState!.save(); // TexFormField 의 onSaved 가 호출 됨
+
+    Navigator.pushAndRemoveUntil(
+      // NEW: 이때까지 스택된 스크린들 삭제
+      context,
+      MaterialPageRoute(
+        builder: (context) => InterestsScreen(),
+      ),
+      (route) {
+        print(route);
+        // return true; // 어떤 라우트도 제거 하지 않음
+        return false; // 이때까지 Push 된 스크린(라우트) 제거
+      },
+    );
   }
 }
