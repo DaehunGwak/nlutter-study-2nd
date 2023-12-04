@@ -39,40 +39,18 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        currentIndex: _selectedIndex,
-        onTap: _onTab,
-        items: const [
-          BottomNavigationBarItem(
+      bottomNavigationBar: NavigationBar(
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onTab,
+        destinations: [
+          NavigationDestination(
             icon: FaIcon(FontAwesomeIcons.house),
             label: 'Home',
-            tooltip: 'what argu?',
-            backgroundColor: Colors.amber, // NEW: 3개 이상의 item 에서만 기본적으로 적용
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
             label: 'Search',
-            tooltip: 'what argu?',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            label: 'Search',
-            tooltip: 'what argu?',
-            backgroundColor: Colors.pink,
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            label: 'Search',
-            tooltip: 'what argu?',
-            backgroundColor: Colors.purple,
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            label: 'Search',
-            tooltip: 'what argu?',
-            backgroundColor: Colors.green,
           ),
         ],
       ),
