@@ -5,6 +5,7 @@ import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/timeline/models/feed.dart';
 
 import 'feed_images_widget.dart';
+import 'feed_reply_avatars.dart';
 import 'feed_top_widget.dart';
 import 'profile_avatar.dart';
 
@@ -81,20 +82,19 @@ class FeedWidget extends StatelessWidget {
               ],)
             ],
           ),
+          Gaps.v12,
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Gaps.h80,
-              Column(
-                children: [
-                  Gaps.v20,
-                  Text(
-                    "${feed.replyCount} replies﹒${feed.likeCount} likes",
-                    style: const TextStyle(
-                      fontSize: Sizes.size16,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
+              Gaps.h16,
+              FeedReplyAvatars(feed: feed),
+              Gaps.h8,
+              Text(
+                "${feed.replyCount} replies﹒${feed.likeCount} likes",
+                style: const TextStyle(
+                  fontSize: Sizes.size16,
+                  color: Colors.grey,
+                ),
               ),
             ],
           )

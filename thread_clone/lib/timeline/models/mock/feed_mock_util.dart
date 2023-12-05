@@ -23,13 +23,12 @@ class FeedMockUtil {
     );
 
     for (int i = 0; i < 40; i++) {
+      final replyCount = (i < 3) ? (i + 1) : random.integer(100);
+      final replyUserLength = (replyCount < 3) ? replyCount : 3;
+
       feeds.add(
         Feed(
-          createdUser: User(
-            nickname: faker.internet.userName(),
-            profileImageUrl: _profileImageUrl(faker),
-            confirmed: (i % 2 == 0) ? false : true,
-          ),
+          createdUser: _mockUser(i % 2 == 0),
           contentImageUrls: [
             if (i % 3 == 0)
               for (int j = 0; j < 3; j++)
@@ -37,13 +36,25 @@ class FeedMockUtil {
           ],
           contentDescription: faker.lorem.sentence(),
           createdDateTime: nowDateTime.subtract(Duration(minutes: 2 + i * 41)),
-          replyCount: random.integer(100),
+          replyCandidateUsers: [
+            for (int j = 0; j < replyUserLength; j++)
+              _mockUser(false)
+          ],
+          replyCount: replyCount,
           likeCount: random.integer(1000),
         ),
       );
     }
 
     return feeds;
+  }
+
+  static User _mockUser(bool confirmed) {
+    return User(
+      nickname: faker.internet.userName(),
+      profileImageUrl: _profileImageUrl(faker),
+      confirmed: confirmed,
+    );
   }
 
   static String _profileImageUrl(Faker faker) {
