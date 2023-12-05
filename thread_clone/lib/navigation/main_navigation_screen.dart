@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thread_clone/constants/sizes.dart';
-import 'package:thread_clone/home/home_screen.dart';
+import 'package:thread_clone/timeline/timeline_screen.dart';
 import 'package:thread_clone/navigation/widget/main_navigaion_destination.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -13,7 +13,7 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   static const _screens = [
-    HomeScreen(),
+    TimelineScreen(),
     Center(child: Text('dummy search')),
     Center(child: Text('dummy write')),
     Center(child: Text('dummy notification')),
@@ -38,7 +38,30 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           size: Sizes.size44,
         ),
       ),
-      body: _screens[_currentIndex],
+      body: Stack(
+        children: [
+          Offstage(
+            offstage: _currentIndex != 0,
+            child: const TimelineScreen(),
+          ),
+          Offstage(
+            offstage: _currentIndex != 1,
+            child: const Center(child: Text('dummy search')),
+          ),
+          Offstage(
+            offstage: _currentIndex != 2,
+            child: const Center(child: Text('dummy write')),
+          ),
+          Offstage(
+            offstage: _currentIndex != 3,
+            child: const Center(child: Text('dummy notification')),
+          ),
+          Offstage(
+            offstage: _currentIndex != 4,
+            child: const Center(child: Text('dummy user')),
+          ),
+        ],
+      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Sizes.size20),
         child: NavigationBar(
