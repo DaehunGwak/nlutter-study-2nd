@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../constants/sizes.dart';
 import 'widgets/feed_widget.dart';
 import 'models/feed.dart';
 import 'models/mock/feed_mock_util.dart';
@@ -28,6 +30,13 @@ class _TimelineScreenState extends State<TimelineScreen> {
     print('build timeline');
     return CustomScrollView(
       slivers: [
+        const SliverAppBar(
+          toolbarHeight: Sizes.size64,
+          title: FaIcon(
+            FontAwesomeIcons.threads,
+            size: Sizes.size44,
+          ),
+        ),
         SliverList(
           // NEW: ListView.builder 대체 가능, TODO: sliver 란?
           delegate: SliverChildBuilderDelegate(

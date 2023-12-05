@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/timeline/models/feed.dart';
 
+import 'feed_images_widget.dart';
 import 'feed_top_widget.dart';
 import 'profile_avatar.dart';
 
@@ -17,31 +20,84 @@ class FeedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(
-        left: Sizes.size16,
         top: Sizes.size16,
         bottom: Sizes.size16,
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          Column(
-            // LEFT SIDE
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProfileAvatar(
-                imageUrl: feed.createdUser.profileImageUrl,
+              Gaps.h16,
+              Column(
+                // LEFT SIDE
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ProfileAvatar(
+                    imageUrl: feed.createdUser.profileImageUrl,
+                  ),
+                ],
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: Sizes.size8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FeedTopWidget(feed: feed),
+                      Gaps.v3,
+                      Padding(
+                        padding: const EdgeInsets.only(right: Sizes.size24),
+                        child: Text(
+                          feed.contentDescription,
+                          style: const TextStyle(fontSize: Sizes.size16),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: Sizes.size8),
-              child: Column(
+          if (feed.contentImageUrls.isNotEmpty) Gaps.v12,
+          if (feed.contentImageUrls.isNotEmpty) FeedImagesWidget(feed: feed),
+          const Row(
+            children: [
+              Gaps.h80,
+              Column(children: [
+                Gaps.v16,
+                Row(
+                  children: [
+                    FaIcon(FontAwesomeIcons.heart),
+                    Gaps.h16,
+                    FaIcon(FontAwesomeIcons.comment),
+                    Gaps.h16,
+                    FaIcon(FontAwesomeIcons.rotate),
+                    Gaps.h16,
+                    FaIcon(FontAwesomeIcons.paperPlane),
+                  ],
+                ),
+              ],)
+            ],
+          ),
+          Row(
+            children: [
+              Gaps.h80,
+              Column(
                 children: [
-                  FeedTopWidget(feed: feed),
+                  Gaps.v20,
+                  Text(
+                    "${feed.replyCount} replies﹒${feed.likeCount} likes",
+                    style: const TextStyle(
+                      fontSize: Sizes.size16,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ),
+            ],
+          )
         ],
       ),
     );

@@ -24,12 +24,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const FaIcon(
-          FontAwesomeIcons.threads,
-          size: Sizes.size44,
-        ),
-      ),
       body: Stack(
         children: [
           Offstage(
