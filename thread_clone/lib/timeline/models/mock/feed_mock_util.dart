@@ -19,7 +19,7 @@ class FeedMockUtil {
             confirmed: (i % 2 == 0) ? false : true,
           ),
           contentDescription: faker.lorem.sentence(),
-          createdDateTime: nowDateTime.add(Duration(minutes: 2 + i * 31)),
+          createdDateTime: nowDateTime.subtract(Duration(minutes: 2 + i * 41)),
         ),
       );
     }
