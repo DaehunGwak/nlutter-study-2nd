@@ -12,14 +12,6 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  static const _screens = [
-    TimelineScreen(),
-    Center(child: Text('dummy search')),
-    Center(child: Text('dummy write')),
-    Center(child: Text('dummy notification')),
-    Center(child: Text('dummy user')),
-  ];
-
   int _currentIndex = 0;
 
   // TODO: void 를 넣고 안넣고의 차이는?
@@ -42,7 +34,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: [
           Offstage(
             offstage: _currentIndex != 0,
-            child: const TimelineScreen(),
+            child: TimelineScreen(),
           ),
           Offstage(
             offstage: _currentIndex != 1,
