@@ -49,9 +49,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           indicatorColor: Colors.white,
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
           destinations: const [
-            MainNavigationDestination(iconData: FontAwesomeIcons.house),
             MainNavigationDestination(
-                iconData: FontAwesomeIcons.magnifyingGlass),
+              iconData: FontAwesomeIcons.house,
+            ),
+            MainNavigationDestination(
+              iconData: FontAwesomeIcons.magnifyingGlass,
+            ),
             MainNavigationDestination(
               iconData: FontAwesomeIcons.squarePlus,
               selectedIconData: FontAwesomeIcons.solidSquarePlus,

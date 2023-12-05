@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/features/main/navigation/stf_screen.dart';
+import 'package:tiktok_clone/features/main/navigation/widgets/navigation_tab.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -12,25 +15,22 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
-  final screens = const [
+  final screens = [
+    StfScreen(key: GlobalKey(),), // NEW: 이렇게 사용하면 매번 새롭게 로딩해서 문제 가능성 존재
+    StfScreen(key: GlobalKey(),),
     Center(
-      child: Text('Home'),
+      child: Text('Create'),
     ),
     Center(
-      child: Text('Search'),
+      child: Text('Inbox'),
     ),
     Center(
-      child: Text('Home'),
-    ),
-    Center(
-      child: Text('Search'),
-    ),
-    Center(
-      child: Text('Home'),
+      child: Text('Profile'),
     ),
   ];
 
   _onTab(int index) {
+    print(index);
     setState(() {
       _selectedIndex = index;
     });
@@ -38,20 +38,48 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.house),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.search),
-            label: 'Search',
-          ),
-        ],
+    return Scaffold(
+      body: screens.elementAt(_selectedIndex),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            MainNavigationTab(
+              text: 'Home',
+              iconData: FontAwesomeIcons.house,
+              isSelected: _selectedIndex == 0,
+              onTap: () => _onTab(0),
+            ),
+            MainNavigationTab(
+              text: 'Discover',
+              iconData: FontAwesomeIcons.compass,
+              selectedIconData: FontAwesomeIcons.solidCompass,
+              isSelected: _selectedIndex == 1,
+              onTap: () => _onTab(1),
+            ),
+            // MainNavigationTab(
+            //   text: 'Home',
+            //   iconData: FontAwesomeIcons.house,
+            //   isSelected: _selectedIndex == 2,
+            // ),
+            MainNavigationTab(
+              text: 'Inbox',
+              iconData: FontAwesomeIcons.message,
+              selectedIconData: FontAwesomeIcons.solidMessage,
+              isSelected: _selectedIndex == 3,
+              onTap: () => _onTab(3),
+            ),
+            MainNavigationTab(
+              text: 'Profile',
+              iconData: FontAwesomeIcons.user,
+              selectedIconData: FontAwesomeIcons.solidUser,
+              isSelected: _selectedIndex == 4,
+              onTap: () => _onTab(4),
+            ),
+          ],
+        ),
       ),
-      tabBuilder: (context, index) => screens[index],
     );
   }
 }
