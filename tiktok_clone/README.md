@@ -2,15 +2,10 @@
 
 NomadCoders TikTok Clone project
 
-## Getting Started
+## review points
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- `AnimatedOpacity` 로 자연스러운 on/off animation 연출 가능
+- 글자 깨짐 현상은 디코딩 문제일 수 있음 `utf8.decode` 활용해보자 (feat. 김시윤 님)
+- Material AppBar, Cupertino AppBar, Custom AppBar 기능 
+- 각 위젯의 `key` 를 `Widget(key: GlobalKey())` 로 생성하면 고유하게 가져갈 수 있음, 아니면 재사용 될 수 있으니 주의
+- `Offstage` 위젯을 활용하여 위젯이 사라지지 않고 그대로 state 를 가질 수 있게 유지하는 방법

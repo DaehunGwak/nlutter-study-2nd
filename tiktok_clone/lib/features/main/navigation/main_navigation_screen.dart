@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/features/main/navigation/stf_screen.dart';
 import 'package:tiktok_clone/features/main/navigation/widgets/navigation_tab.dart';
 
@@ -15,20 +13,6 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
-  final screens = [
-    StfScreen(key: GlobalKey(),), // NEW: 이렇게 사용하면 매번 새롭게 로딩해서 문제 가능성 존재
-    StfScreen(key: GlobalKey(),),
-    Center(
-      child: Text('Create'),
-    ),
-    Center(
-      child: Text('Inbox'),
-    ),
-    Center(
-      child: Text('Profile'),
-    ),
-  ];
-
   _onTab(int index) {
     print(index);
     setState(() {
@@ -39,7 +23,30 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens.elementAt(_selectedIndex),
+      body: Stack(
+        children: [
+          Offstage(
+            offstage: _selectedIndex != 0,
+            child: const StfScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 1,
+            child: const StfScreen(),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 3,
+            child: const Center(
+              child: Text('inbox'),
+            ),
+          ),
+          Offstage(
+            offstage: _selectedIndex != 4,
+            child: const Center(
+              child: Text('profile'),
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Row(
