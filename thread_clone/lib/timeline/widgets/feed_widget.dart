@@ -24,80 +24,89 @@ class FeedWidget extends StatelessWidget {
         top: Sizes.size16,
         bottom: Sizes.size16,
       ),
-      child: Column(
+      child: Stack(
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          IntrinsicHeight(
+            child: Container(color: Colors.red, width: 10,),
+          ),
+          Column(
             children: [
-              Gaps.h16,
-              Column(
-                // LEFT SIDE
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ProfileAvatar(
-                    imageUrl: feed.createdUser.profileImageUrl,
+                  Gaps.h16,
+                  Column(
+                    // LEFT SIDE
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ProfileAvatar(
+                        imageUrl: feed.createdUser.profileImageUrl,
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: Sizes.size8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          FeedTopWidget(feed: feed),
+                          Gaps.v3,
+                          Padding(
+                            padding: const EdgeInsets.only(right: Sizes.size24),
+                            child: Text(
+                              feed.contentDescription,
+                              style: const TextStyle(fontSize: Sizes.size16),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: Sizes.size8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              if (feed.contentImageUrls.isNotEmpty) Gaps.v12,
+              if (feed.contentImageUrls.isNotEmpty)
+                FeedImagesWidget(feed: feed),
+              const Row(
+                children: [
+                  Gaps.h80,
+                  Column(
                     children: [
-                      FeedTopWidget(feed: feed),
-                      Gaps.v3,
-                      Padding(
-                        padding: const EdgeInsets.only(right: Sizes.size24),
-                        child: Text(
-                          feed.contentDescription,
-                          style: const TextStyle(fontSize: Sizes.size16),
-                        ),
+                      Gaps.v16,
+                      Row(
+                        children: [
+                          FaIcon(FontAwesomeIcons.heart),
+                          Gaps.h16,
+                          FaIcon(FontAwesomeIcons.comment),
+                          Gaps.h16,
+                          FaIcon(FontAwesomeIcons.rotate),
+                          Gaps.h16,
+                          FaIcon(FontAwesomeIcons.paperPlane),
+                        ],
                       ),
-
                     ],
+                  )
+                ],
+              ),
+              Gaps.v12,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Gaps.h16,
+                  FeedReplyAvatars(feed: feed),
+                  Gaps.h8,
+                  Text(
+                    "${feed.replyCount} replies﹒${feed.likeCount} likes",
+                    style: const TextStyle(
+                      fontSize: Sizes.size16,
+                      color: Colors.grey,
+                    ),
                   ),
-                ),
-              ),
+                ],
+              )
             ],
           ),
-          if (feed.contentImageUrls.isNotEmpty) Gaps.v12,
-          if (feed.contentImageUrls.isNotEmpty) FeedImagesWidget(feed: feed),
-          const Row(
-            children: [
-              Gaps.h80,
-              Column(children: [
-                Gaps.v16,
-                Row(
-                  children: [
-                    FaIcon(FontAwesomeIcons.heart),
-                    Gaps.h16,
-                    FaIcon(FontAwesomeIcons.comment),
-                    Gaps.h16,
-                    FaIcon(FontAwesomeIcons.rotate),
-                    Gaps.h16,
-                    FaIcon(FontAwesomeIcons.paperPlane),
-                  ],
-                ),
-              ],)
-            ],
-          ),
-          Gaps.v12,
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Gaps.h16,
-              FeedReplyAvatars(feed: feed),
-              Gaps.h8,
-              Text(
-                "${feed.replyCount} replies﹒${feed.likeCount} likes",
-                style: const TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          )
         ],
       ),
     );
