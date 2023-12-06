@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/features/main/home/home_test_screen.dart';
 import 'package:tiktok_clone/features/main/navigation/stf_screen.dart';
 import 'package:tiktok_clone/features/main/navigation/widgets/navigation_tab.dart';
 import 'package:tiktok_clone/features/main/navigation/widgets/post_video_button.dart';
@@ -31,7 +32,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: [
           Offstage(
             offstage: _selectedIndex != 0,
-            child: const StfScreen(),
+            child: const HomeTestScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 1,
