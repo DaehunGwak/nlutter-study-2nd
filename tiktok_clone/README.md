@@ -2,6 +2,11 @@
 
 NomadCoders TikTok Clone project
 
+## versions
+
+- dart: 3.1.5
+- flutter: 3.13.9
+
 ## review points
 
 - `AnimatedOpacity` 로 자연스러운 on/off animation 연출 가능

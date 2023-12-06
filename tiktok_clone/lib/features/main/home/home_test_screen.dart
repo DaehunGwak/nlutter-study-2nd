@@ -10,6 +10,7 @@ class HomeTestScreen extends StatelessWidget {
     await showModalBottomSheet(
       // NEW: bottom sheet 띄우는 법
       context: context,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         // NEW: container 적용이 안되어 찾아봄
         // https://www.flutterbeads.com/bottom-sheet-with-rounded-corners-in-flutter/
