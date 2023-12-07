@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:thread_clone/timeline/widgets/more/feed_more_bottom_sheet.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
@@ -12,6 +13,16 @@ class FeedTopWidget extends StatelessWidget {
   });
 
   final Feed feed;
+
+  void _onEllipsisButtonPressed(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      clipBehavior: Clip.hardEdge,
+      backgroundColor: Colors.white,
+      builder: (context) => const FeedMoreBottomSheet(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +47,12 @@ class FeedTopWidget extends StatelessWidget {
               ),
             ),
             Gaps.h12,
-            const FaIcon(
-              FontAwesomeIcons.ellipsis,
-              size: Sizes.size20,
+            GestureDetector(
+              onTap: () => _onEllipsisButtonPressed(context),
+              child: const FaIcon(
+                FontAwesomeIcons.ellipsis,
+                size: Sizes.size20,
+              ),
             ),
             Gaps.h24,
           ],
