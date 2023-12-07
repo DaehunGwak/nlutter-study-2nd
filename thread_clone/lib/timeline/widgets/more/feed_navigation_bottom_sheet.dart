@@ -3,13 +3,28 @@ import 'package:thread_clone/constants/gaps.dart';
 import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/timeline/widgets/more/feed_more_text.dart';
 
-class FeedMoreBottomSheet extends StatelessWidget {
-  const FeedMoreBottomSheet({super.key});
+import 'feed_report_bottom_sheet.dart';
+
+class FeedNavigationBottomSheet extends StatelessWidget {
+  const FeedNavigationBottomSheet({super.key});
+
+  void _onReportAreaTap(BuildContext context) {
+    Navigator.of(context).pop();
+    showModalBottomSheet(
+      context: context,
+      clipBehavior: Clip.hardEdge,
+      enableDrag: true,
+      isScrollControlled: true,
+      builder: (context) => const FeedReportBottomSheet(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    print('nav: $height, $width');
+
     return Container(
       height: height * 0.34,
       width: width,
@@ -55,15 +70,21 @@ class FeedMoreBottomSheet extends StatelessWidget {
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(Sizes.size10),
               ),
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  FeedMoreText(text: 'Hide'),
-                  Divider(
+                  const FeedMoreText(text: 'Hide'),
+                  const Divider(
                     thickness: 0.3,
                     height: 0.3,
                   ),
-                  FeedMoreText(text: 'Report', textColor: Colors.red),
+                  GestureDetector(
+                    onTap: () => _onReportAreaTap(context),
+                    child: const FeedMoreText(
+                      text: 'Report',
+                      textColor: Colors.red,
+                    ),
+                  ),
                 ],
               ),
             ),

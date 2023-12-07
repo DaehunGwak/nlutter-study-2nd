@@ -16,13 +16,15 @@ class FeedMoreText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(Sizes.size16),
-          child: Text(
-            text,
-            style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.bold,
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(Sizes.size16),
+            child: Text(
+              text,
+              style: TextStyle(
+                color: textColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

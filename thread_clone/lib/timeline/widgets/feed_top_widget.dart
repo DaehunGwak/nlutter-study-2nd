@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:thread_clone/timeline/widgets/more/feed_more_bottom_sheet.dart';
+import 'package:thread_clone/timeline/widgets/more/feed_navigation_bottom_sheet.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
@@ -20,7 +20,7 @@ class FeedTopWidget extends StatelessWidget {
       isScrollControlled: true,
       clipBehavior: Clip.hardEdge,
       backgroundColor: Colors.white,
-      builder: (context) => const FeedMoreBottomSheet(),
+      builder: (context) => const FeedNavigationBottomSheet(),
     );
   }
 
