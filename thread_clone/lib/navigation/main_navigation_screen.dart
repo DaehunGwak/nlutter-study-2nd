@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:thread_clone/constants/sizes.dart';
 import 'package:thread_clone/timeline/timeline_screen.dart';
 import 'package:thread_clone/navigation/widget/main_navigaion_destination.dart';
+import 'package:thread_clone/write/write_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -15,10 +16,20 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _currentIndex = 0;
 
   // TODO: void 를 넣고 안넣고의 차이는?
-  _onNavigationSelected(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+  void _onNavigationSelected(int index) async {
+    if (index != 2) {
+      setState(() {
+        _currentIndex = index;
+      });
+      return;
+    }
+    await showModalBottomSheet(
+      context: context,
+      enableDrag: false,
+      isScrollControlled: true,
+      clipBehavior: Clip.hardEdge,
+      builder: (context) => const WriteScreen(),
+    );
   }
 
   @override
@@ -33,10 +44,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           Offstage(
             offstage: _currentIndex != 1,
             child: const Center(child: Text('dummy search')),
-          ),
-          Offstage(
-            offstage: _currentIndex != 2,
-            child: const Center(child: Text('dummy write')),
           ),
           Offstage(
             offstage: _currentIndex != 3,
