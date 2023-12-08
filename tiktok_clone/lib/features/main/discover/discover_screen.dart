@@ -1,21 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/util/mock_util.dart';
 
-class DiscoverScreen extends StatelessWidget {
+class DiscoverScreen extends StatefulWidget {
   const DiscoverScreen({super.key});
-
-  final tabs = const [
-    'Top',
-    'Users',
-    'Videos',
-    'Sounds',
-    'LIVE',
-    'Shopping',
-    'Brands'
-  ];
 
   static final imageUrls = [
     for (int i = 0; i < 20; i++)
@@ -27,13 +18,44 @@ class DiscoverScreen extends StatelessWidget {
   ];
 
   @override
+  State<DiscoverScreen> createState() => _DiscoverScreenState();
+}
+
+class _DiscoverScreenState extends State<DiscoverScreen> {
+  final tabs = const [
+    'Top',
+    'Users',
+    'Videos',
+    'Sounds',
+    'LIVE',
+    'Shopping',
+    'Brands'
+  ];
+  final TextEditingController _textEditingController = TextEditingController(
+    text: 'Initial text',
+  );
+
+
+  // TODO: 왜 dispose 시 controller 도 해제해야할까? 메모리 때문에?
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
+        resizeToAvoidBottomInset: false, // 가상 키보드가 나와도 사이즈가 줄어들지 않음
         appBar: AppBar(
           elevation: 1,
-          title: const Text('Discover'),
+          title: CupertinoSearchTextField( // NEW
+            controller: _textEditingController,
+            onChanged: _onSearchChanged,
+            onSubmitted: _onSearchSubmitted,
+          ),
           // NEW: PreferredSizedWidget: 해당 위젯은 특정한 사이즈를 가지려 하지만
           // 자식 위젯은 부모요소의 사이즈 제한을 받지 않음
           bottom: TabBar(
@@ -59,6 +81,7 @@ class DiscoverScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             GridView.builder(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               padding: const EdgeInsets.all(Sizes.size10),
               itemCount: 20,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -74,9 +97,13 @@ class DiscoverScreen extends StatelessWidget {
                     child: Container(
                       // NEW: FadeInImage 를 이용해서 기본 이미지를 지정하고 후에 로딩되면 페이드인 되도록
                       // 구성하는 위젯, 하지만 여기서 사용 안할거임
-                      color: Colors.grey.shade400,
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade400,
+                        borderRadius: BorderRadius.circular(Sizes.size4),
+                      ),
                       child: Image.network(
-                        imageUrls.elementAt(index),
+                        DiscoverScreen.imageUrls.elementAt(index),
                         fit: BoxFit.cover, // NEW: 부모 위젯의 사이즈에 어떻게 피팅할것인가? 를 지정
                       ),
                     ),
@@ -93,7 +120,8 @@ class DiscoverScreen extends StatelessWidget {
                     ),
                   ),
                   Gaps.v6,
-                  DefaultTextStyle( // NEW
+                  DefaultTextStyle(
+                    // NEW
                     style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
@@ -105,7 +133,7 @@ class DiscoverScreen extends StatelessWidget {
                           radius: Sizes.size14,
                           backgroundColor: Colors.grey.shade400,
                           foregroundImage: NetworkImage(
-                            profileImageUrls.elementAt(index),
+                            DiscoverScreen.profileImageUrls.elementAt(index),
                           ),
                         ),
                         Gaps.h4,
@@ -135,15 +163,25 @@ class DiscoverScreen extends StatelessWidget {
               ),
             ),
             for (var tab in tabs.skip(1))
-              Center(
-                child: Text(
-                  tab,
-                  style: const TextStyle(fontSize: Sizes.size28),
+              SizedBox(
+                child: Center(
+                  child: Text(
+                    tab,
+                    style: const TextStyle(fontSize: Sizes.size28),
+                  ),
                 ),
               )
           ],
         ),
       ),
     );
+  }
+
+  void _onSearchChanged(String value) {
+    print('changed: $value');
+  }
+
+  void _onSearchSubmitted(String value) {
+    print('sbmitted: $value');
   }
 }
