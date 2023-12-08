@@ -5,14 +5,16 @@ import 'package:tiktok_clone/constants/sizes.dart';
 class PostVideoButton extends StatefulWidget {
   const PostVideoButton({
     super.key,
+    required this.isBlackTheme,
   });
+
+  final bool isBlackTheme;
 
   @override
   State<PostVideoButton> createState() => _PostVideoButtonState();
 }
 
 class _PostVideoButtonState extends State<PostVideoButton> {
-  bool _isTapped = false;
 
   // void tap() {
   //   setState(() {
@@ -65,12 +67,12 @@ class _PostVideoButtonState extends State<PostVideoButton> {
             width: Sizes.size40,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: _isTapped ? Colors.grey : Colors.white,
+              color: widget.isBlackTheme ? Colors.white : Colors.black,
               borderRadius: BorderRadius.circular(Sizes.size9),
             ),
-            child: const FaIcon(
+            child: FaIcon(
               FontAwesomeIcons.plus,
-              color: Colors.black,
+              color: widget.isBlackTheme ? Colors.black : Colors.white,
               size: Sizes.size16,
             ),
           ),
